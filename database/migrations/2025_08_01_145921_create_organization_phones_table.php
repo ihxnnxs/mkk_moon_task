@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('organization_phones', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('organization_id')->constrained();
+            $table->string('phone');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

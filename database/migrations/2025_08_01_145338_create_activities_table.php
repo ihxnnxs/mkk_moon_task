@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('parent_id')->nullable()->constrained('activities');
+            $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
