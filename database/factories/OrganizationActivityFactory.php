@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Activity;
+use App\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\organizationActivity>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OrganizationActivity>
  */
 class OrganizationActivityFactory extends Factory
 {
@@ -17,7 +19,8 @@ class OrganizationActivityFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'organization_id' => Organization::factory(),
+            'activity_id' => Activity::factory(),
         ];
     }
 }

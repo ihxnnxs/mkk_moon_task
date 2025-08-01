@@ -17,7 +17,9 @@ class BuildingFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'address' => fake()->streetAddress() . ', ' . fake()->city(),
+            'latitude' => fake()->latitude(55.5, 56.0), // Примерно координаты Москвы
+            'longitude' => fake()->longitude(37.0, 38.0),
         ];
     }
 }

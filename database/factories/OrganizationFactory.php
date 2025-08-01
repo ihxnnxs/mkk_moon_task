@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Building;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class OrganizationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'building_id' => Building::factory(),
+            'name' => fake()->company(),
         ];
     }
 }

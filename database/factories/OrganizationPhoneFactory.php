@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\organizationPhone>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OrganizationPhone>
  */
 class OrganizationPhoneFactory extends Factory
 {
@@ -17,7 +18,8 @@ class OrganizationPhoneFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'organization_id' => Organization::factory(),
+            'phone' => fake()->phoneNumber(),
         ];
     }
 }
