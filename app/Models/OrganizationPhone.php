@@ -17,7 +17,10 @@ class OrganizationPhone extends Model
         'phone',
     ];
 
-    public function organization() : belongsTo
+    /**
+     * @return BelongsTo<Organization, $this>
+     */
+    public function organization() : BelongsTo
     {
         return $this->belongsTo(Organization::class);
     }

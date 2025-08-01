@@ -19,17 +19,26 @@ class Organization extends Model
         'name',
     ];
 
-    public function building() : belongsTo
+    /**
+     * @return BelongsTo<Building, $this>
+     */
+    public function building() : BelongsTo
     {
         return $this->belongsTo(Building::class);
     }
 
-    public function phones() : hasMany
+    /**
+     * @return HasMany<OrganizationPhone, $this>
+     */
+    public function phones() : HasMany
     {
         return $this->hasMany(OrganizationPhone::class);
     }
 
-    public function activities() : belongsToMany
+    /**
+     * @return BelongsToMany<Activity, $this>
+     */
+    public function activities() : BelongsToMany
     {
         return $this->belongsToMany(Activity::class, 'organization_activities');
     }

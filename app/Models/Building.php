@@ -18,13 +18,19 @@ class Building extends Model
         'longitude',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
     ];
 
 
-    public function organizations() : hasMany
+    /**
+     * @return HasMany<Organization, $this>
+     */
+    public function organizations() : HasMany
     {
         return $this->hasMany(Organization::class);
     }

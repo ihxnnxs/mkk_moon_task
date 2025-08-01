@@ -19,12 +19,18 @@ class OrganizationActivity extends Model
 
     protected $table = 'organization_activities';
 
-    public function organization() : belongsTo
+    /**
+     * @return BelongsTo<Organization, $this>
+     */
+    public function organization() : BelongsTo
     {
         return $this->belongsTo(Organization::class);
     }
 
-    public function activity() : belongsTo
+    /**
+     * @return BelongsTo<Activity, $this>
+     */
+    public function activity() : BelongsTo
     {
         return $this->belongsTo(Activity::class);
     }

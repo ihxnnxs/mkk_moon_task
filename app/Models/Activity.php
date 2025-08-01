@@ -19,12 +19,18 @@ class Activity extends Model
         'name',
     ];
 
-    public function parent() : belongsTo
+    /**
+     * @return BelongsTo<Activity, $this>
+     */
+    public function parent() : BelongsTo
     {
         return $this->belongsTo(Activity::class, 'parent_id');
     }
 
-    public function children() : hasMany
+    /**
+     * @return HasMany<Activity, $this>
+     */
+    public function children() : HasMany
     {
         return $this->hasMany(Activity::class, 'parent_id');
     }
