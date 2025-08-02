@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BuildingResource;
 use App\Models\Building;
+use App\SwaggerDocs\Api\Buildings\BuildingControllerDoc\IndexDoc;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use OpenApi\Attributes as OA;
 
@@ -20,26 +21,9 @@ use OpenApi\Attributes as OA;
     ],
     type: 'object'
 )]
-#[OA\Get(
-    path: '/api/buildings',
-    operationId: 'getBuildingsList',
-    description: 'Возвращает список всех зданий',
-    summary: 'Получить список зданий',
-    security: [['bearerAuth' => []]],
-    tags: ['Buildings'],
-    responses: [
-        new OA\Response(
-            response: 200,
-            description: 'Успешный ответ',
-            content: new OA\JsonContent(
-                type: 'array',
-                items: new OA\Items(ref: '#/components/schemas/Building')
-            )
-        )
-    ]
-)]
 class BuildingController extends Controller
 {
+    #[IndexDoc]
     public function index(): AnonymousResourceCollection
     {
         $buildings = Building::query()

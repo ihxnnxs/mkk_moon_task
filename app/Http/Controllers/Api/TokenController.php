@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\SwaggerDocs\Api\Auth\TokenControllerDoc\GetTokenDoc;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
 
@@ -13,25 +14,7 @@ use OpenApi\Attributes as OA;
 )]
 class TokenController extends Controller
 {
-    #[OA\Get(
-        path: '/api/token',
-        operationId: 'getToken',
-        description: 'Получить токен для доступа к API',
-        summary: 'Получить токен',
-        tags: ['Auth'],
-        responses: [
-            new OA\Response(
-                response: 200,
-                description: 'Токен успешно создан',
-                content: new OA\JsonContent(
-                    properties: [
-                        new OA\Property(property: 'token', type: 'string', example: '1|abcdef123456789'),
-                        new OA\Property(property: 'type', type: 'string', example: 'Bearer')
-                    ]
-                )
-            )
-        ]
-    )]
+    #[GetTokenDoc]
     public function getToken(): JsonResponse
     {
         $apiUser = User::firstOrCreate([

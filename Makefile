@@ -43,6 +43,8 @@ setup:
 	docker-compose exec -T app php artisan db:seed --force || true
 	@echo "🔧 Исправление прав доступа..."
 	docker-compose exec -T app chown -R www:www /var/www/storage /var/www/bootstrap/cache || true
+	@echo "🔧 Генерация документации API..."
+	docker-compose exec -T app php artisan l5-swagger:generate || true
 	@echo ""
 	@echo "✅ Настройка завершена!"
 	@echo "🌐 Откройте http://localhost:8080/api/documentation в браузере"

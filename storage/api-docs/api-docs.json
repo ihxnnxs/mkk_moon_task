@@ -22,8 +22,44 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Building"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "address": {
+                                                "type": "string",
+                                                "example": "123 Main St"
+                                            },
+                                            "latitude": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 40.7128
+                                            },
+                                            "longitude": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": -74.006
+                                            }
+                                        },
+                                        "type": "object"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -62,20 +98,106 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Organization"
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Организация \"Пример\""
+                                        },
+                                        "building": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "123 Main St"
+                                                },
+                                                "latitude": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 40.7128
+                                                },
+                                                "longitude": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": -74.006
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "phones": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "+7 (999) 123-45-67"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "activities": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "parent_id": {
+                                                        "type": "integer",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Медицинские услуги"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Организация не найдена",
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No query results for model [App\\Models\\Organization] 1"
+                                            "example": "No query results for model"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -91,17 +213,17 @@
                 ]
             }
         },
-        "/api/organizations/building/{buildingId}": {
+        "/api/organizations/building/{building_id}": {
             "get": {
                 "tags": [
                     "Organizations"
                 ],
-                "summary": "Организации по зданию",
-                "description": "Получить организации в здании",
+                "summary": "Получить организации по зданию",
+                "description": "Получить организации по ID здания",
                 "operationId": "getOrganizationsByBuilding",
                 "parameters": [
                     {
-                        "name": "buildingId",
+                        "name": "building_id",
                         "in": "path",
                         "description": "ID здания",
                         "required": true,
@@ -119,8 +241,94 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Organization"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Организация \"Пример\""
+                                            },
+                                            "building": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Main St"
+                                                    },
+                                                    "latitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40.7128
+                                                    },
+                                                    "longitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": -74.006
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phones": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "+7 (999) 123-45-67"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "activities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "parent_id": {
+                                                            "type": "integer",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Медицинские услуги"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -133,19 +341,19 @@
                 ]
             }
         },
-        "/api/organizations/activity/{activityId}": {
+        "/api/organizations/activity/{activity_id}": {
             "get": {
                 "tags": [
                     "Organizations"
                 ],
-                "summary": "Организации по деятельности",
-                "description": "Получить организации по виду деятельности",
+                "summary": "Получить организации по деятельности",
+                "description": "Получить организации по ID деятельности",
                 "operationId": "getOrganizationsByActivity",
                 "parameters": [
                     {
-                        "name": "activityId",
+                        "name": "activity_id",
                         "in": "path",
-                        "description": "ID вида деятельности",
+                        "description": "ID деятельности",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -161,8 +369,94 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Organization"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Организация \"Пример\""
+                                            },
+                                            "building": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Main St"
+                                                    },
+                                                    "latitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40.7128
+                                                    },
+                                                    "longitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": -74.006
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phones": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "+7 (999) 123-45-67"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "activities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "parent_id": {
+                                                            "type": "integer",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Медицинские услуги"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -180,8 +474,8 @@
                 "tags": [
                     "Organizations"
                 ],
-                "summary": "Поиск по дереву деятельности",
-                "description": "Поиск организаций по дереву видов деятельности (включая дочерние)",
+                "summary": "Поиск организаций по дереву деятельности",
+                "description": "Поиск организаций по дереву деятельности",
                 "operationId": "searchOrganizationsByActivityTree",
                 "requestBody": {
                     "required": true,
@@ -211,14 +505,84 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Organization"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Организация \"Пример\""
+                                            },
+                                            "building": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Main St"
+                                                    },
+                                                    "latitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40.7128
+                                                    },
+                                                    "longitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": -74.006
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phones": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "+7 (999) 123-45-67"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "activities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "parent_id": {
+                                                            "type": "integer",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Медицинские услуги"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
                                     }
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Ошибка валидации",
+                        "description": "Validation Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -228,15 +592,28 @@
                                             "example": "The given data was invalid."
                                         },
                                         "errors": {
-                                            "properties": {
-                                                "activity_id": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                            "type": "object",
+                                            "example": {
+                                                "field_name": [
+                                                    "Field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -257,18 +634,18 @@
                 "tags": [
                     "Organizations"
                 ],
-                "summary": "Поиск по названию",
+                "summary": "Поиск организаций по названию",
                 "description": "Поиск организаций по названию",
                 "operationId": "searchOrganizationsByName",
                 "parameters": [
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "Часть названия организации",
+                        "description": "Название организации для поиска",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "медицина"
+                            "example": "Медицинский"
                         }
                     }
                 ],
@@ -280,14 +657,84 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Organization"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Организация \"Пример\""
+                                            },
+                                            "building": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Main St"
+                                                    },
+                                                    "latitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40.7128
+                                                    },
+                                                    "longitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": -74.006
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phones": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "+7 (999) 123-45-67"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "activities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "parent_id": {
+                                                            "type": "integer",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Медицинские услуги"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
                                     }
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Ошибка валидации",
+                        "description": "Validation Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -297,15 +744,28 @@
                                             "example": "The given data was invalid."
                                         },
                                         "errors": {
-                                            "properties": {
-                                                "name": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                            "type": "object",
+                                            "example": {
+                                                "field_name": [
+                                                    "Field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -326,7 +786,7 @@
                 "tags": [
                     "Organizations"
                 ],
-                "summary": "Поиск по радиусу",
+                "summary": "Поиск организаций по геолокации (радиус)",
                 "description": "Поиск организаций в радиусе от точки",
                 "operationId": "getOrganizationsByGeoRadius",
                 "requestBody": {
@@ -341,22 +801,20 @@
                                 ],
                                 "properties": {
                                     "latitude": {
-                                        "description": "Широта центра поиска",
                                         "type": "number",
                                         "format": "float",
                                         "example": 55.7558
                                     },
                                     "longitude": {
-                                        "description": "Долгота центра поиска",
                                         "type": "number",
                                         "format": "float",
                                         "example": 37.6176
                                     },
                                     "radius": {
-                                        "description": "Радиус поиска в километрах",
+                                        "description": "Радиус поиска в метрах",
                                         "type": "number",
                                         "format": "float",
-                                        "example": 5
+                                        "example": 1000
                                     }
                                 },
                                 "type": "object"
@@ -372,14 +830,84 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Organization"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Организация \"Пример\""
+                                            },
+                                            "building": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Main St"
+                                                    },
+                                                    "latitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40.7128
+                                                    },
+                                                    "longitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": -74.006
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phones": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "+7 (999) 123-45-67"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "activities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "parent_id": {
+                                                            "type": "integer",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Медицинские услуги"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
                                     }
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Ошибка валидации",
+                        "description": "Validation Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -389,27 +917,28 @@
                                             "example": "The given data was invalid."
                                         },
                                         "errors": {
-                                            "properties": {
-                                                "latitude": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "longitude": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "radius": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                            "type": "object",
+                                            "example": {
+                                                "field_name": [
+                                                    "Field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -430,7 +959,7 @@
                 "tags": [
                     "Organizations"
                 ],
-                "summary": "Поиск по прямоугольнику",
+                "summary": "Поиск организаций по геолокации (прямоугольник)",
                 "description": "Поиск организаций в прямоугольной области",
                 "operationId": "getOrganizationsByGeoRectangle",
                 "requestBody": {
@@ -449,25 +978,25 @@
                                         "description": "Минимальная широта",
                                         "type": "number",
                                         "format": "float",
-                                        "example": 55.5
+                                        "example": 55.6558
                                     },
                                     "max_lat": {
                                         "description": "Максимальная широта",
                                         "type": "number",
                                         "format": "float",
-                                        "example": 56
+                                        "example": 55.8558
                                     },
                                     "min_lng": {
                                         "description": "Минимальная долгота",
                                         "type": "number",
                                         "format": "float",
-                                        "example": 37
+                                        "example": 37.5176
                                     },
                                     "max_lng": {
                                         "description": "Максимальная долгота",
                                         "type": "number",
                                         "format": "float",
-                                        "example": 38
+                                        "example": 37.7176
                                     }
                                 },
                                 "type": "object"
@@ -483,14 +1012,84 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Organization"
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Организация \"Пример\""
+                                            },
+                                            "building": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Main St"
+                                                    },
+                                                    "latitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40.7128
+                                                    },
+                                                    "longitude": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": -74.006
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phones": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "+7 (999) 123-45-67"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "activities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "parent_id": {
+                                                            "type": "integer",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Медицинские услуги"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
                                     }
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Ошибка валидации",
+                        "description": "Validation Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -500,33 +1099,28 @@
                                             "example": "The given data was invalid."
                                         },
                                         "errors": {
-                                            "properties": {
-                                                "min_lat": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "max_lat": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "min_lng": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "max_lng": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
+                                            "type": "object",
+                                            "example": {
+                                                "field_name": [
+                                                    "Field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
                                         }
                                     },
                                     "type": "object"
@@ -622,14 +1216,6 @@
                         "type": "string",
                         "example": "Организация \"Пример\""
                     },
-                    "building_id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "Описание организации"
-                    },
                     "building": {
                         "$ref": "#/components/schemas/Building"
                     },
@@ -641,7 +1227,7 @@
                                     "type": "integer",
                                     "example": 1
                                 },
-                                "number": {
+                                "phone": {
                                     "type": "string",
                                     "example": "+7 (999) 123-45-67"
                                 }
@@ -657,6 +1243,11 @@
                                     "type": "integer",
                                     "example": 1
                                 },
+                                "parent_id": {
+                                    "type": "integer",
+                                    "example": null,
+                                    "nullable": true
+                                },
                                 "name": {
                                     "type": "string",
                                     "example": "Медицинские услуги"
@@ -667,6 +1258,103 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "requestBodies": {
+            "searchByActivityTree": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "activity_id"
+                            ],
+                            "properties": {
+                                "activity_id": {
+                                    "description": "ID родительского вида деятельности",
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "getByGeoRadius": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "latitude",
+                                "longitude",
+                                "radius"
+                            ],
+                            "properties": {
+                                "latitude": {
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 55.7558
+                                },
+                                "longitude": {
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 37.6176
+                                },
+                                "radius": {
+                                    "description": "Радиус поиска в метрах",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 1000
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "getByGeoRectangle": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "min_lat",
+                                "max_lat",
+                                "min_lng",
+                                "max_lng"
+                            ],
+                            "properties": {
+                                "min_lat": {
+                                    "description": "Минимальная широта",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 55.6558
+                                },
+                                "max_lat": {
+                                    "description": "Максимальная широта",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 55.8558
+                                },
+                                "min_lng": {
+                                    "description": "Минимальная долгота",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 37.5176
+                                },
+                                "max_lng": {
+                                    "description": "Максимальная долгота",
+                                    "type": "number",
+                                    "format": "float",
+                                    "example": 37.7176
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
             }
         },
         "securitySchemes": {
